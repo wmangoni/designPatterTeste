@@ -1,6 +1,5 @@
 <?php
 spl_autoload_register(function ($class_name) {
-	echo strtolower($class_name) . '.class.php';
     include_once strtolower($class_name) . '.class.php';
 });
 

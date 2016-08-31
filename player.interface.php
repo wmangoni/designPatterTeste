@@ -1,6 +1,4 @@
 <?php
-namespace PlayerCore;
-
 interface IPlayer {
 	public function causeDamage();
 	public function attack();

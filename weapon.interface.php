@@ -1,8 +1,6 @@
 <?php
-namespace PlayerCore;
-
 interface IWeapon {
 	public function damage();
-	public function reduceDurability();
+	public function reduceDurability($dano);
 	public function getRandFactory();
 }

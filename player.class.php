@@ -1,5 +1,4 @@
 <?php
-namespace PlayerCore;
 include_once 'player.interface.php';
 
 class Player implements IPlayer {

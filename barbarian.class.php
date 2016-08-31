@@ -1,5 +1,4 @@
 <?php
-namespace PlayerCore;
 include_once 'player.class.php';
 include_once 'warrior.interface.php';
 
@@ -9,14 +8,14 @@ class Barbarian extends Player implements IWarrior {
 	public function __construct($level) {
 
 		$this->level = $level;
-		$this->str = mt_rand(8, 18) + $factorLevel($level);
+		$this->str = mt_rand(8, 18) + $this->factorLevel($level);
 		$this->dex = mt_rand(8, 18);
 		$this->con = mt_rand(12, 18);
 		$this->int = mt_rand(8, 14);
 		$this->wis = mt_rand(8, 18);
 		$this->cha = mt_rand(8, 14);
 
-		$this->recalculateParams($factorLevel($level));
+		$this->recalculateParams($this->factorLevel($level));
 		$this->calculateBba();
 	}
 	public function calculateBba() {

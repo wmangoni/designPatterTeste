@@ -1,5 +1,4 @@
 <?php
-namespace PlayerCore;
 include_once 'weapon.interface.php';
 
 class Weapon implements IWeapon{
@@ -22,7 +21,7 @@ class Weapon implements IWeapon{
 		$this->durability -= $dano;
 	}
 	public function recalculateParams() {
-		$damage = explode('d', $dice);
+		$damage = explode('d', $this->dice);
 		$this->damageMin = $damage[0];
 		$this->damageMax = $damage[0] * $damage[1];
 	}
