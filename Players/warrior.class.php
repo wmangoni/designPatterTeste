@@ -1,6 +1,6 @@
 <?php
 include_once 'player.class.php';
-include_once 'warrior.interface.php';
+include_once '../Interfaces/warrior.interface.php';
 
 class Warrior extends Player implements IWarrior {
 
