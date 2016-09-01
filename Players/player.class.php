@@ -1,5 +1,5 @@
 <?php
-include_once '../Interfaces/player.interface.php';
+include_once 'Interfaces/player.interface.php';
 
 class Player implements IPlayer {
 	/* @var string */

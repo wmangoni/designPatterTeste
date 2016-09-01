@@ -1,6 +1,10 @@
 <?php
 spl_autoload_register(function ($class_name) {
-    include_once 'Players/' . strtolower($class_name) . '.class.php';
+	if ( file_exists('Players/' . strtolower($class_name) . '.class.php') ) {
+    	include_once 'Players/' . strtolower($class_name) . '.class.php';
+	} else if ( file_exists('Weapons/' . strtolower($class_name) . '.class.php') ) {
+		include_once 'Weapons/' . strtolower($class_name) . '.class.php';
+	}
 });
 
 $gue = new Warrior(6);
@@ -17,4 +21,3 @@ $wiz = new Wizard(10);
 $wiz->setWeapon( new Knife() );
 $wiz->displayEstatics();
 $wiz->setWeapon( new LongSword() );
-$wiz->displayEstatics();

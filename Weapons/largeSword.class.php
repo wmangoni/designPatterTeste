@@ -1,7 +1,7 @@
 <?php
 include_once 'weapon.class.php';
 
-class LargeSword extends weapon{
+class LargeSword extends Weapon {
 
 	public function __construct($durability = 10) {
 		$this->name = 'Large Sword';

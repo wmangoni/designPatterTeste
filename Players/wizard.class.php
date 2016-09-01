@@ -1,6 +1,6 @@
 <?php
 include_once 'player.class.php';
-include_once '../Interfaces/mages.interface.php';
+include_once 'Interfaces/mages.interface.php';
 
 class Wizard extends Player implements IMages {
 

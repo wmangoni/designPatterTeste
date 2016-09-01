@@ -1,5 +1,5 @@
 <?php
-include_once 'weapon.interface.php';
+include_once 'Interfaces/weapon.interface.php';
 
 class Weapon implements IWeapon{
 	protected $name;
