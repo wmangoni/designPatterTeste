@@ -5,8 +5,10 @@ spl_autoload_register(function ($class_name) {
 
 $gue = new Warrior(6);
 $gue->setWeapon( new LongSword() );
-$gue->displayAttributes();
+$gue->displayEstatics();
 
 $bar = new Barbarian(2);
 $bar->setWeapon( new Knife() );
-$bar->displayAttributes();
+$bar->displayEstatics();
+$bar->setWeapon( new LargeSword() );
+$bar->displayEstatics();
