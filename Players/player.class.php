@@ -43,14 +43,14 @@ class Player implements IPlayer {
 		$attack['dice'] = mt_rand(1, 20);
 		$attack['bba'] = $this->bba;
 		$attack['bonus'] = $this->getBonus($this->str);
-		$attack['damage'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
+		$attack['total'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
 		return $attack;
 	}
 	public function longAttack() {
 		$attack['dice'] = mt_rand(1, 20);
 		$attack['bba'] = $this->bba;
 		$attack['bonus'] = $this->getBonus($this->dex);
-		$attack['damage'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
+		$attack['total'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
 		return $attack;
 	}
 	public function takesDamage($dano) {
@@ -62,6 +62,20 @@ class Player implements IPlayer {
 	public function setArmor(Armor $armor) {
 		$this->armor = $armor;
 	}
+	public function getArmor() {
+		return $this->armor;
+	}
+	public function getCA() {
+		$armor = (!is_null($this->getArmor())) ? $this->getArmor()->getProtection() : 0;
+		$this->ca = 10 + $this->getBonus($this->dex) + $armor;
+		return $this->ca;
+	}
+	public function getHP() {
+		return $this->hp;
+	}
+	public function setHP($d) {
+		$this->hp = $d;
+	}
 	public function recalculateParams($factorCalculateAtr) {
 		if ($this instanceof Warrior) {
 			$this->str += $factorCalculateAtr;
@@ -70,8 +84,11 @@ class Player implements IPlayer {
 		} else if ($this instanceof Warrior) {
 			$this->int += $factorCalculateAtr;
 		}
-		$this->hp = 10 + $this->getBonus($this->con) * $this->level;
-		$this->ca = 10 + $this->getBonus($this->dex);
+		$vida = 10; 
+		for ($i = 0; $i < $this->level; $i++) {
+			$vida += mt_rand(1,10) + $this->getBonus($this->con);
+		}
+		$this->hp = $vida;
 	}
 	public function getBonus($atr) {
 		return ($atr % 2 == 0) ? ($atr - 10) / 2 : ($atr - 11) / 2;
@@ -82,21 +99,19 @@ class Player implements IPlayer {
 	public function displayEstatics() {
 		$atk = $this->shortAttack();
 		$dmg = $this->causeDamage();
-		echo '<div class="statiscs">';
-		echo '<span><strong>Classe</strong> : '.$this->nome.'</span><br>';
-		echo '<span><strong>Level</strong> : '.$this->level.'</span><br>';
-		echo '<span><strong>Level</strong> : '.$this->hp.'</span><br>';
-		echo '<span><strong>Level</strong> : '.$this->ca.'</span><br>';
-		echo '<span><strong>Força</strong> : '.$this->str.' ('.$this->getBonus($this->str).')</span><br>';
-		echo '<span><strong>Destreza</strong> : '.$this->dex.' ('.$this->getBonus($this->dex).') </span><br>';
-		echo '<span><strong>Constituição</strong> : '.$this->con.' ('.$this->getBonus($this->con).') </span><br>';
-		echo '<span><strong>Inteligência</strong> : '.$this->int.' ('.$this->getBonus($this->int).') </span><br>';
-		echo '<span><strong>Sabedoria</strong> : '.$this->wis.' ('.$this->getBonus($this->wis).') </span><br>';
-		echo '<span><strong>Carisma</strong> : '.$this->cha.' ('.$this->getBonus($this->cha).') </span><br>';
-		echo '<span><strong>Arma</strong> : '.$this->weapon->getName().'</span><br>';
-		echo '<span><strong>Dado Base</strong> : '.$this->weapon->getDice().'</span><br>';
-		echo '<span><strong>Valor Ataque</strong> : '.$atk['damage'].' ( dado '.$atk['dice'].' + bba '.$atk['bba'].' + bonus '.$atk['bonus'].' )</span><br>';
-		echo '<span><strong>Dano com a Arma</strong> : '.$dmg['total'].' (dado '.$dmg['dice'].' + bonus '.$dmg['bonus'].') </span><br>------<br>';
-		echo '</div>';
+		echo '<td>'.$this->nome.'</td>';
+		echo '<td>'.$this->level.'</td>';
+		echo '<td>'.$this->hp.'</td>';
+		echo '<td>'.$this->getCA().'</td>';
+		echo '<td>'.$this->str.' ('.$this->getBonus($this->str).')</td>';
+		echo '<td>'.$this->dex.' ('.$this->getBonus($this->dex).') </td>';
+		echo '<td>'.$this->con.' ('.$this->getBonus($this->con).') </td>';
+		echo '<td>'.$this->int.' ('.$this->getBonus($this->int).') </td>';
+		echo '<td>'.$this->wis.' ('.$this->getBonus($this->wis).') </td>';
+		echo '<td>'.$this->cha.' ('.$this->getBonus($this->cha).') </td>';
+		echo '<td>'.$this->weapon->getName().'</td>';
+		echo '<td>'.$this->weapon->getDice().'</td>';
+		echo '<td>'.$atk['total'].' ( dado '.$atk['dice'].' + bba '.$atk['bba'].' + bonus '.$atk['bonus'].' )</td>';
+		echo '<td>'.$dmg['total'].' (dado '.$dmg['dice'].' + bonus '.$dmg['bonus'].') </td>';
 	}
 }
