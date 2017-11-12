@@ -63,6 +63,13 @@ class Player implements IPlayer {
 		$this->armor = $armor;
 	}
 	public function recalculateParams($factorCalculateAtr) {
+		if ($this instanceof Warrior) {
+			$this->str += $factorCalculateAtr;
+		} else if ($this instanceof Barbarian) {
+			$this->con += $factorCalculateAtr;
+		} else if ($this instanceof Warrior) {
+			$this->int += $factorCalculateAtr;
+		}
 		$this->hp = 10 + $this->getBonus($this->con) * $this->level;
 		$this->ca = 10 + $this->getBonus($this->dex);
 	}
@@ -78,6 +85,8 @@ class Player implements IPlayer {
 		echo '<div class="statiscs">';
 		echo '<span><strong>Classe</strong> : '.$this->nome.'</span><br>';
 		echo '<span><strong>Level</strong> : '.$this->level.'</span><br>';
+		echo '<span><strong>Level</strong> : '.$this->hp.'</span><br>';
+		echo '<span><strong>Level</strong> : '.$this->ca.'</span><br>';
 		echo '<span><strong>Força</strong> : '.$this->str.' ('.$this->getBonus($this->str).')</span><br>';
 		echo '<span><strong>Destreza</strong> : '.$this->dex.' ('.$this->getBonus($this->dex).') </span><br>';
 		echo '<span><strong>Constituição</strong> : '.$this->con.' ('.$this->getBonus($this->con).') </span><br>';

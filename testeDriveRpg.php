@@ -1,7 +1,7 @@
 <?php
 spl_autoload_register(function ($class_name) {
 	if ( file_exists('Players/' . strtolower($class_name) . '.class.php') ) {
-    	include_once 'Players/' . strtolower($class_name) . '.class.php';
+		include_once 'Players/' . strtolower($class_name) . '.class.php';
 	} else if ( file_exists('Weapons/' . strtolower($class_name) . '.class.php') ) {
 		include_once 'Weapons/' . strtolower($class_name) . '.class.php';
 	} else {

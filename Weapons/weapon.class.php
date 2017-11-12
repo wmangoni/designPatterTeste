@@ -1,7 +1,7 @@
 <?php
 include_once 'Interfaces/weapon.interface.php';
 
-class Weapon implements IWeapon{
+class Weapon implements IWeapon, IItem {
 	protected $name;
 	protected $dice;
 	protected $damageMin = 0;
