@@ -14,11 +14,11 @@ define('BASE_URL', 'http://localhost/flightPHP/');
 require_once 'Template/header.php';
 require_once 'Template/nav.php';
 
-$gue = new Warrior(6);
+$gue = new Warrior(7);
 $gue->setWeapon( new LongSword() );
-$gue->setArmor( new ArmorBattle(66) );
+$gue->setArmor( new Leather(41) );
 
-$bar = new Barbarian(4);
+$bar = new Barbarian(8);
 $bar->setWeapon( new LargeSword() );
 $bar->setArmor( new Leather(43) );
 
@@ -31,17 +31,19 @@ function turn(Player $p1, Player $p2) {
 		$atk_p1 = $p1->shortAttack();
 		$atk_p2 = $p2->shortAttack();
 		if ($atk_p1['total'] > $p2->getCA()) {
-			$p2->takesDamage( $p1->causeDamage()['total'] );
-			$echo_2 = $p2->getHP(). ' Dano recebido: ' .$atk_p1['total'].' ( dado '.$atk_p1['dice'].' + bba '.$atk_p1['bba'].' + bonus '.$atk_p1['bonus'];
+			$dano_p1 = $p1->causeDamage()['total'];
+			$p2->takesDamage( $dano_p1 );
+			$echo_2 = $p2->getHP(). ' Ataque: '.$atk_p1['total'].' Dano recebido: ' .$dano_p1;
 		} else {
-			$echo_2 = $p2->getHP(). ' Dano defendido!';
+			$echo_2 = $p2->getHP(). ' Ataque: '.$atk_p1['total'].' Dano defendido!';
 		}
 
 		if ($atk_p2['total'] > $p1->getCA()) {
-			$p1->takesDamage( $p2->causeDamage()['total'] );
-			$echo_1 = $p1->getHP(). ' Dano recebido: ' .$atk_p2['total'].' ( dado '.$atk_p2['dice'].' + bba '.$atk_p2['bba'].' + bonus '.$atk_p2['bonus'];
+			$dano_p2 = $p2->causeDamage()['total'];
+			$p1->takesDamage( $dano_p2 );
+			$echo_1 = $p1->getHP(). ' Ataque: '.$atk_p2['total'].'.Dano recebido: ' .$dano_p2;
 		} else {
-			$echo_1 = $p1->getHP(). ' Dano defendido!';
+			$echo_1 = $p1->getHP(). ' Ataque: '.$atk_p2['total'].' Dano defendido!';
 		}
 
 		echo '<td> HP: '.$echo_1.'</td>';
@@ -82,7 +84,7 @@ function turn(Player $p1, Player $p2) {
 	</table>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-12">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -94,8 +96,8 @@ function turn(Player $p1, Player $p2) {
   <tbody>
   	<tr>
   		<td scope="row">0</td>
-  		<td>Guerreiro - <?= $gue->getHP() ?></td>
-  		<td>Bárbaro - <?= $bar->getHP() ?></td>
+  		<td>Gue - HP: <?= $gue->getHP() ?> CA: <?= $gue->getCA() ?></td>
+  		<td>Bár - HP: <?= $bar->getHP() ?> CA: <?= $gue->getCA() ?></td>
   	</tr>
   	<?php turn($gue, $bar); ?>
   </tbody>
