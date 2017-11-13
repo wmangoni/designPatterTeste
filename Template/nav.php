@@ -4,18 +4,18 @@
   </button>
   <a class="navbar-brand" href="#">
   	<img src="./assets/imgs/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-    Bootstrap
+    D&D Simulator
   </a>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="<?= BASE_URL ?>">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="<?= BASE_URL ?>">Warrior vs Barbarian <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= BASE_URL . 'teste' ?>">Features</a>
+        <a class="nav-link" href="<?= BASE_URL . '?page=wiz-war' ?>">Wizard vs Warrior</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?= BASE_URL . 'pricing' ?>">Pricing</a>
+        <a class="nav-link" href="<?= BASE_URL . '?page=bar-wiz' ?>">Barbarian vs Wizard</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
