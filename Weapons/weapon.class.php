@@ -3,11 +3,23 @@ include_once 'Interfaces/weapon.interface.php';
 include_once 'Interfaces/item.interface.php';
 
 class Weapon implements IWeapon, IItem {
-	protected $name;
-	protected $dice;
-	protected $damageMin = 0;
-	protected $damageMax = 0;
-	protected $durability;
+	
+	/* @var String */
+	protected $name;// Ex.: 'Long Sword';
+	/* @var String */
+	protected $dice;// Ex.: '1d8';
+	/* @var int */
+	protected $weight;// Ex.: 1;
+	/* @var int */
+	protected $damageMin;// Ex.: 0;
+	/* @var int */
+	protected $damageMax;// Ex.: 0;
+	/* @var int */
+	protected $durability;// Ex.: 1;
+	/* @var int */
+	protected $criticalFactory;// Ex.: 1;
+	/* @var int */
+	protected $criticalMargin;// Ex.: 20;
 
 	private function __construct() {}
 
@@ -36,5 +48,17 @@ class Weapon implements IWeapon, IItem {
 		$damage = explode('d', $this->dice);
 		$this->setDamageMin( $damage[0] );
 		$this->setDamageMax( $damage[0] * $damage[1] );
+	}
+	public function setCriticalFactory($factory) {
+		$this->criticalFactory = $factory;
+	}
+	public function setCriticalMarign($margin) {
+		$this->criticalMargin = $margin;
+	}
+	public function getCriticalFactory() {
+		return $this->criticalFactory;
+	}
+	public function getCriticalMarign() {
+		return $this->criticalMargin;
 	}
 }

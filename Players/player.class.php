@@ -3,55 +3,78 @@ include_once 'Interfaces/player.interface.php';
 
 class Player implements IPlayer {
 	/* @var string */
-	protected $nome = 'Player';
+	protected $nome; //Ex.: 'Player';
 	/* @var int */
-	protected $level;
+	protected $level; //Ex.: 5
 	/* @var int */
-	protected $hp;
+	protected $hp; //Ex.: 59
+	/* @var boolean */
+	protected $critical; //Ex.: FALSE;
 	/* @var int */
-	protected $ca;
+	protected $ca; //Ex.:
 	/* @var int */
-	protected $bba;
+	protected $bba; //Ex.:
 	/* @var int */
-	protected $protectFactor = 0;
+	protected $protectFactor; //Ex.:= 0;
 	/* @var int */
-	protected $str;
+	protected $str; //Ex.:
 	/* @var int */
-	protected $dex;
+	protected $dex; //Ex.:
 	/* @var int */
-	protected $con;
+	protected $con; //Ex.:
 	/* @var int */
-	protected $int;
+	protected $int; //Ex.:
 	/* @var int */
-	protected $wis;
+	protected $wis; //Ex.:
 	/* @var int */
-	protected $cha;
+	protected $cha; //Ex.:
 	/* @var Obj Weapon */
-	protected $weapon;
+	protected $weapon; //Ex.:
 	/* @var Obj Armor */
-	protected $armor;
+	protected $armor; //Ex.:
 
-	private function __construct() {}
+	public function __construct() {
+		$this->critical = FALSE;
+		$this->recalculateParams($this->factorLevel($this->level));
+		$this->calculateBba();
+	}
 
 	public function causeDamage() {
-		$damage['dice'] = $this->weapon->damage();
+		if ($this->critical) {
+			$damage['dice'] = 0;
+			for ($i = 0; $i < $this->weapon->getCriticalFactory(); $i++) {
+				$damage['dice'] += $this->weapon->damage();
+			}
+		} else {
+			$damage['dice'] = $this->weapon->damage();
+		}
+		
 		$damage['bonus'] = $this->getBonus($this->str);
 		$damage['total'] = $damage['dice'] + $damage['bonus'];
 		return $damage;
 	}
 	public function shortAttack() {
-		$attack['dice'] = mt_rand(1, 20);
+		$attack['dice'] = $this->roleDiceToAtk();
 		$attack['bba'] = $this->bba;
 		$attack['bonus'] = $this->getBonus($this->str);
 		$attack['total'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
 		return $attack;
 	}
 	public function longAttack() {
-		$attack['dice'] = mt_rand(1, 20);
+		$attack['dice'] = $this->roleDiceToAtk();
 		$attack['bba'] = $this->bba;
 		$attack['bonus'] = $this->getBonus($this->dex);
 		$attack['total'] = $attack['dice'] + $attack['bba'] + $attack['bonus'];
 		return $attack;
+	}
+	public function roleDiceToAtk() {
+		$dice = mt_rand(1, 20);
+		if ($dice >= $this->weapon->getCriticalMarign()) {
+			$this->critical = TRUE;
+		} else {
+			$this->critical = FALSE;
+		}
+		return $dice;
 	}
 	public function takesDamage($dano) {
 		$this->hp -= $dano - $this->protectFactor;
@@ -75,6 +98,9 @@ class Player implements IPlayer {
 	}
 	public function setHP($d) {
 		$this->hp = $d;
+	}
+	public function getCritical() {
+		return $this->critical;
 	}
 	public function recalculateParams($factorCalculateAtr) {
 		if ($this instanceof Warrior) {

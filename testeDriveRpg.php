@@ -22,27 +22,35 @@ function turn(Player $p1, Player $p2) {
 		echo '<tr>';
 		echo '<td scope="row">'.$count.'</td>';
 		$atk_p1 = $p1->shortAttack();
+		$span_style1 = getCritical($p1);
 		$atk_p2 = $p2->shortAttack();
-		if ($atk_p1['total'] > $p2->getCA()) {
-			$dano_p1 = $p1->causeDamage()['total'];
-			$p2->takesDamage( $dano_p1 );
-			$echo_2 = $p2->getHP(). ' Ataque: '.$atk_p1['total'].' Dano recebido: ' .$dano_p1;
-		} else {
-			$echo_2 = $p2->getHP(). ' Ataque: '.$atk_p1['total'].' Defendido!';
-		}
+		$span_style2 = getCritical($p2);
 
-		if ($atk_p2['total'] > $p1->getCA()) {
-			$dano_p2 = $p2->causeDamage()['total'];
-			$p1->takesDamage( $dano_p2 );
-			$echo_1 = $p1->getHP(). ' Ataque: '.$atk_p2['total'].'.Dano recebido: ' .$dano_p2;
-		} else {
-			$echo_1 = $p1->getHP(). ' Ataque: '.$atk_p2['total'].' Defendido!';
-		}
+		$echo_2 = getMensageAtk($atk_p1, $p1, $p2, $span_style1);
+		$echo_1 = getMensageAtk($atk_p2, $p2, $p1, $span_style2);
 
 		echo '<td> HP: '.$echo_1.'</td>';
 		echo '<td> HP: '.$echo_2.'</td>';
 		echo '</tr>';
 		$count++;
+	}
+}
+
+function getCritical($p) {
+	if ($p->getCritical()) {
+		return ' <span style="color: red;"> Ataque Crítico: </span>';
+	} else {
+		return ' <span>Ataque: </span>';
+	}
+}
+
+function getMensageAtk($atk_p, $p1, $p2, $span_style) {
+	if ($atk_p['total'] > $p2->getCA()) {
+		$dano = $p1->causeDamage()['total'];
+		$p2->takesDamage( $dano );
+		return $p2->getHP(). $span_style.' '.$atk_p['total'].' Dano recebido: ' .$dano;
+	} else {
+		return $p2->getHP(). $span_style.' '.$atk_p['total'].' Defendido!';
 	}
 }
 

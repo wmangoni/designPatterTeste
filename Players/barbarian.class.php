@@ -6,6 +6,7 @@ class Barbarian extends Player implements IWarrior {
 
 	public function __construct($level) {
 
+		$this->nome = 'Barbarian';
 		$this->level = $level;
 		$this->str = mt_rand(13, 17) + $this->factorLevel($level);
 		$this->dex = mt_rand(10, 16);
@@ -14,9 +15,7 @@ class Barbarian extends Player implements IWarrior {
 		$this->wis = mt_rand(10, 14);
 		$this->cha = mt_rand(8, 12);
 
-		$this->recalculateParams($this->factorLevel($level));
-		$this->calculateBba();
-		$this->nome = 'Barbarian';
+		parent::__construct(); //Sempre chamar o contrutor pai no fim
 	}
 	public function calculateBba() {
 		$this->bba = $this->level;

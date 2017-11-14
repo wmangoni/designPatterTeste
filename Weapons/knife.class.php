@@ -7,6 +7,8 @@ class Knife extends weapon {
 		$this->name = 'Knife';
 		$this->dice = '1d4';
 		$this->durability = $durability;
+		$this->setCriticalFactory(2);
+		$this->setCriticalMarign(19);
 		$this->recalculateParams();
 	}
 }

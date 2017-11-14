@@ -1,13 +1,14 @@
 <?php
 include_once 'weapon.class.php';
 
-class LongSword extends weapon {
+class Axe extends Weapon {
 
 	public function __construct($durability = 10) {
-		$this->name = 'Long Sword';
-		$this->dice = '1d8';
+		$this->name = 'Axe';
+		$this->dice = '1d12';
+		$this->weight = 4;
 		$this->durability = $durability;
-		$this->setCriticalFactory(2);
+		$this->setCriticalFactory(3);
 		$this->setCriticalMarign(19);
 		$this->recalculateParams();
 	}
